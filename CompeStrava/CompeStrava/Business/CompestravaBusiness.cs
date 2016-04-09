@@ -26,11 +26,11 @@ namespace CompeStrava.Business
                     var cal = act.Sum(a => a.Kilojoules);
 
                     ret.Add(new Tuple<ActivityType, Club, LeaderboardVMentry>(type, c, new LeaderboardVMentry(){
-                        distance = dist,
-                        duration = dur,
+                        distance = Convert.ToInt32(dist),
+                        duration = System.TimeSpan.FromSeconds(dur),
                         climbing = clim,
-                        sufferScore = suf.HasValue ? suf.Value : 0,
-                        calories = cal
+                        sufferScore = suf.HasValue ? Convert.ToInt32(suf.Value) : 0,
+                        calories = Convert.ToInt32(cal)
                     }));
                 }
             }
@@ -39,11 +39,11 @@ namespace CompeStrava.Business
 
         public class LeaderboardVMentry
         {
-            public double distance;
-            public double duration;
+            public int distance;
+            public TimeSpan duration;
             public int climbing;
-            public double sufferScore;
-            public double calories;
+            public int sufferScore;
+            public int calories;
         }
     }
 }
