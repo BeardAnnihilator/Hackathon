@@ -54,5 +54,10 @@ namespace CompeStrava.Strava
 
         //private occuranceBeteenDates(string[] occurances  Tuple<DateTime, DateTime> daterange)
 
+
+        public void joinClub(string clubId)
+        {
+            client.Clubs.JoinClub(clubId);
+        }
     }
 }
