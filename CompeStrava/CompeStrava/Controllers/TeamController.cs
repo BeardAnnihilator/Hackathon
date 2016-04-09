@@ -16,5 +16,11 @@ namespace CompeStrava.Controllers
         {
             return View(new Tuple<Club, List<AthleteSummary>>(Global.Global.strava.GetClub(teamid.ToString()), Global.Global.strava.GetClubMembers(teamid.ToString())));
         }
-	}
+
+        public ActionResult ClubEvents(int teamid)
+        {
+            var test = Global.Global.strava.ClubEvents(teamid.ToString());
+            return View();
+        }
+    }
 }
