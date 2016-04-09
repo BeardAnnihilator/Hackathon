@@ -35,5 +35,18 @@ namespace CompeStrava.Strava
         {
             return client.Clubs.GetClubMembers(clubid);
         }
+
+        public List<ClubEvent> ClubEvents(string clubid)
+        {
+            return client.Clubs.GetClubEvents(clubid);
+        }
+
+        //public List<ClubEvent> ClubEventsByDateRange(string clubid, Tuple<DateTime,DateTime> daterange)
+        //{
+        //    return client.Clubs.GetClubEvents(clubid).Where(e => date e.Occurences );
+        //}
+
+        //private occuranceBeteenDates(string[] occurances  Tuple<DateTime, DateTime> daterange)
+
     }
 }
