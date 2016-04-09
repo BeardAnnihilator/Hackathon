@@ -1,14 +1,31 @@
 ﻿@using Strava.Clubs;
-@model Club
+@using Strava.Athletes;
+@model Tuple<Club, List<AthleteSummary>>
 @{
     ViewBag.Title = "Club";
 }
 <div class="col-lg-12">
     <div class="page-header">
-        <h1 id="tables">@Model.Name</h1>
+        <h1 id="tables">@Model.Item1.Name</h1>
     </div>
 
     <div class="bs-component">
-
-    </div><!-- /example -->
+            <table class="table table-striped table-hover ">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (AthleteSummary a in Model.Item2)
+                    {
+                        <tr>
+                            <td><img style="height:100px;width:100px" src="@a.Profile"></td>
+                            <td>@(a.FirstName + " " + a.LastName)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div><!-- /example -->
 </div>

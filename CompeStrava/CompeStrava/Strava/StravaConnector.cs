@@ -30,5 +30,10 @@ namespace CompeStrava.Strava
         {
             return client.Clubs.GetClub(clubId);
         }
+
+        public List<AthleteSummary> GetClubMembers(string clubid)
+        {
+            return client.Clubs.GetClubMembers(clubid);
+        }
     }
 }
