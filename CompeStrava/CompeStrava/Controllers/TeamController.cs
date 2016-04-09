@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace CompeStrava.Controllers
 {
-    [Authorize]
     public class TeamController : Controller
     {
         //
