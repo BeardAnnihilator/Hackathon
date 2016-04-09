@@ -1,4 +1,5 @@
-﻿using CompeStrava.ViewModel;
+﻿using CompeStrava.Business;
+using CompeStrava.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,14 @@ namespace CompeStrava.Controllers
 {
     public class LeaderBoardController : Controller
     {
+        CompestravaBusiness business = new CompestravaBusiness();
+
         //
         // GET: /LeaderBoard/
         public ActionResult Index()
         {
-            return View(new LeaderBoardViewModel());
+            var model = business.GetLeaderBoard();
+            return View(new LeaderBoardViewModel() { data = model });
         }
 	}
 }

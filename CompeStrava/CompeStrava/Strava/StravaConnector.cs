@@ -1,4 +1,5 @@
-﻿using Strava.Athletes;
+﻿using Strava.Activities;
+using Strava.Athletes;
 using Strava.Authentication;
 using Strava.Clients;
 using Strava.Clubs;
@@ -34,6 +35,11 @@ namespace CompeStrava.Strava
         public List<AthleteSummary> GetClubMembers(string clubid)
         {
             return client.Clubs.GetClubMembers(clubid);
+        }
+
+        internal List<ActivitySummary> GetClubActivities(string clubid)
+        {
+            return client.Clubs.GetLatestClubActivities(clubid, 1, 20);
         }
     }
 }

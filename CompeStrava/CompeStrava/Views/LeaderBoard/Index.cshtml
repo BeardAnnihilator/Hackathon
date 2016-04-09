@@ -1,4 +1,5 @@
 ﻿@using CompeStrava.ViewModel
+@using Strava.Activities;
     @model LeaderBoardViewModel
     @{
         ViewBag.Title = "Club";
@@ -8,7 +9,20 @@
             <h1 id="tables">LeaderBoard</h1>
         </div>
 
-        <div class="bs-component">
+        @foreach (ActivityType type in Model.data.Select(d => d.Item1).Distinct())
+        {
+            
+            <h2 id="tables">@(type.ToString())</h2>
+            
+            var summaries = Model.data.Where(d => d.Item1 == type).ToList();
+            int nbclubs = summaries.Select(d => d.Item2).Distinct().Count();
+            var distanceorderedclubs = summaries.OrderByDescending(d => d.Item3.distance).ToList();
+            var durationorderedclubs = summaries.OrderByDescending(d => d.Item3.duration).ToList();
+            var climbingorderedclubs = summaries.OrderByDescending(d => d.Item3.climbing).ToList();
+            var sufferorderedclubs = summaries.OrderByDescending(d => d.Item3.sufferScore).ToList();
+            var caloriesorderedclubs = summaries.OrderByDescending(d => d.Item3.calories).ToList();
+            
+              <div class="bs-component">
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
@@ -21,73 +35,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @for (int i = 0; i < nbclubs;i++)
+                    {
                     <tr>
-                        <td>1</td>
-                        <td><img style="height:30px; width:30px" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg">Alex <span style="float:right">100km</span></td>
-                        <td><img style="height:30px; width:30px" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg">Alex <span style="float:right">6:53</span></td>
-                        <td><img style="height:30px; width:30px" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg">Alex <span style="float:right">114m</span></td>
-                        <td><img style="height:30px; width:30px" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg">Alex <span style="float:right">5</span></td>
-                        <td><img style="height:30px; width:30px" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg">Alex <span style="float:right">500</span></td>
+                        <td>@(i +1)</td>
+                        <td><img style="height:30px; width:30px" src="@(distanceorderedclubs.ElementAt(i).Item2.Profile)">@(distanceorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(distanceorderedclubs.ElementAt(i).Item3.distance)km</span></td>
+                        <td><img style="height:30px; width:30px" src="@(durationorderedclubs.ElementAt(i).Item2.Profile)">@(durationorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(durationorderedclubs.ElementAt(i).Item3.duration)s</span></td>
+                        <td><img style="height:30px; width:30px" src="@(climbingorderedclubs.ElementAt(i).Item2.Profile)">@(climbingorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(climbingorderedclubs.ElementAt(i).Item3.climbing)m</span></td>
+                        <td><img style="height:30px; width:30px" src="@(sufferorderedclubs.ElementAt(i).Item2.Profile)">@(sufferorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(sufferorderedclubs.ElementAt(i).Item3.sufferScore)</span></td>
+                        <td><img style="height:30px; width:30px" src="@(caloriesorderedclubs.ElementAt(i).Item2.Profile)">@(caloriesorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(caloriesorderedclubs.ElementAt(i).Item3.calories)Kj</span></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                    </tr>
-                    <tr class="info">
-                        <td>3</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                    </tr>
-                    <tr class="success">
-                        <td>4</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-
-                        <td>Column content</td>
-                    </tr>
-                    <tr class="danger">
-                        <td>5</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-
-                    </tr>
-                    <tr class="warning">
-                        <td>6</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                    </tr>
-                    <tr class="active">
-                        <td>7</td>
-
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                        <td>Column content</td>
-                    </tr>
+                    }
                 </tbody>
             </table>
-            <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
         </div>
+        }
     </div>
