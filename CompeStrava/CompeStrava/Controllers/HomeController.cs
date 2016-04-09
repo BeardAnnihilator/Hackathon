@@ -1,8 +1,10 @@
-﻿using System;
+﻿using CompeStrava.Strava;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CompeStrava.Global;
 
 namespace CompeStrava.Controllers
 {
@@ -10,7 +12,8 @@ namespace CompeStrava.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = Global.Global.strava.GetClubs();
+            return View(model);
         }
 
         public ActionResult About()
