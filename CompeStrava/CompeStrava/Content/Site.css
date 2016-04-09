@@ -48,3 +48,15 @@ input[type="checkbox"].input-validation-error {
 .leaderboard th {
     text-align: center !important;
 }
+
+.leaderboard .gold {
+    color: yellow !important;
+}
+
+.leaderboard .silver {
+    color: silver !important;
+}
+
+.leaderboard .bronze {
+    color: brown !important;
+}

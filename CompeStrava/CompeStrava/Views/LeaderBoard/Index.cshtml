@@ -13,7 +13,7 @@
         {
             
             <h2 id="tables">@(type.ToString())</h2>
-            
+
             var summaries = Model.data.Where(d => d.Item1 == type).ToList();
             int nbclubs = summaries.Select(d => d.Item2).Distinct().Count();
             var distanceorderedclubs = summaries.OrderByDescending(d => d.Item3.distance).ToList();
@@ -21,7 +21,7 @@
             var climbingorderedclubs = summaries.OrderByDescending(d => d.Item3.climbing).ToList();
             var sufferorderedclubs = summaries.OrderByDescending(d => d.Item3.sufferScore).ToList();
             var caloriesorderedclubs = summaries.OrderByDescending(d => d.Item3.calories).ToList();
-            
+
               <div class="bs-component">
             <table class="table table-striped table-hover leaderboard">
                 <thead>
@@ -39,10 +39,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < nbclubs;i++)
+                    @for (int i = 0; i < nbclubs; i++)
                     {
                     <tr>
-                        <td><i class="fa fa-trophy">@(i + 1)</i></td>
+                        @{ 
+                            var rank = i + 1;
+                            var color = "notrophy";
+                            if (rank == 1) { color = " gold"; }
+                            if (rank == 2) { color = " silver"; }
+                            if (rank == 3) { color = " bronze"; }
+                             }
+                        <td><i class="fa fa-trophy@(color)">@(rank)</i></td>
                         <td><img style="height:30px; width:30px" src="@(distanceorderedclubs.ElementAt(i).Item2.Profile)"> @(distanceorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(distanceorderedclubs.ElementAt(i).Item3.distance)km</span></td>
                         <td class="spacer"></td>
                         <td><img style="height:30px; width:30px" src="@(durationorderedclubs.ElementAt(i).Item2.Profile)"> @(durationorderedclubs.ElementAt(i).Item2.Name) <span style="float:right">@(durationorderedclubs.ElementAt(i).Item3.duration)s</span></td>
