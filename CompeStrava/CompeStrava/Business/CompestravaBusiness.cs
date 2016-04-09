@@ -1,4 +1,5 @@
 ﻿using Strava.Activities;
+using Strava.Athletes;
 using Strava.Clubs;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,71 @@ namespace CompeStrava.Business
                 }
             }
             return ret;
+        }
+
+        public KeyValuePair<AthleteSummary, int> GetUserWithMaxWorkout()
+        {
+            Dictionary<AthleteSummary, int> cache = new Dictionary<AthleteSummary, int>();
+            foreach (Club c in Global.Global.strava.GetClubs())
+            {
+                var activities = Global.Global.strava.GetClubActivities(c.Id.ToString());
+
+                var users = Global.Global.strava.GetClubMembers(c.Id.ToString());
+
+                foreach (var act in activities)
+                {
+                    var us = users.Where(u => u.Id == act.Athlete.Id).First();
+                    if (!cache.ContainsKey(us)) 
+                    {
+                        cache[us] = 1;
+                    }
+                    else
+                    {
+                        cache[us]++;
+                    }
+                }
+            }
+            return cache.OrderByDescending(d => d.Value).FirstOrDefault();
+        }
+
+        public KeyValuePair<AthleteSummary, int> GetUserWithMaxSuffer()
+        {
+            List<ActivitySummary> activities = new List<ActivitySummary>();
+            List<AthleteSummary> users = new List<AthleteSummary>();
+            Dictionary<AthleteSummary, int> cache = new Dictionary<AthleteSummary, int>();
+            foreach (Club c in Global.Global.strava.GetClubs())
+            {
+                var act = Global.Global.strava.GetClubActivities(c.Id.ToString());
+                var us = Global.Global.strava.GetClubMembers(c.Id.ToString());
+                activities.AddRange(act);
+                users.AddRange(us);
+            }
+            foreach (var u in users.Distinct())
+            {
+                cache[u] = (int)activities.Distinct().Where(a => a.Athlete.Id == u.Id).Average(a => a.SufferScore.HasValue?a.SufferScore.Value:0);
+            }
+
+            return cache.OrderByDescending(d => d.Value).FirstOrDefault();
+        }
+
+        public KeyValuePair<AthleteSummary, int> GetUserWithMaxCalories()
+        {
+            List<ActivitySummary> activities = new List<ActivitySummary>();
+            List<AthleteSummary> users = new List<AthleteSummary>();
+            Dictionary<AthleteSummary, int> cache = new Dictionary<AthleteSummary, int>();
+            foreach (Club c in Global.Global.strava.GetClubs())
+            {
+                var act = Global.Global.strava.GetClubActivities(c.Id.ToString());
+                var us = Global.Global.strava.GetClubMembers(c.Id.ToString());
+                activities.AddRange(act);
+                users.AddRange(us);
+            }
+            foreach (var u in users.Distinct())
+            {
+                cache[u] = (int)activities.Distinct().Where(a => a.Athlete.Id == u.Id).Average(a => a.Kilojoules);
+            }
+
+            return cache.OrderByDescending(d => d.Value).FirstOrDefault();
         }
 
         public class LeaderboardVMentry

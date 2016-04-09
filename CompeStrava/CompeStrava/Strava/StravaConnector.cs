@@ -32,19 +32,37 @@ namespace CompeStrava.Strava
             return client.Clubs.GetClub(clubId);
         }
 
+        private Dictionary<string, List<AthleteSummary>> clubmembers = new Dictionary<string, List<AthleteSummary>>();
         public List<AthleteSummary> GetClubMembers(string clubid)
         {
-            return client.Clubs.GetClubMembers(clubid);
+            if (!clubmembers.ContainsKey(clubid))
+            {
+                clubmembers[clubid] = client.Clubs.GetClubMembers(clubid);
+            }
+
+                return clubmembers[clubid];
         }
 
+        private Dictionary<string, List<ActivitySummary>> clubact = new Dictionary<string, List<ActivitySummary>>();
         internal List<ActivitySummary> GetClubActivities(string clubid)
         {
-            return client.Clubs.GetLatestClubActivities(clubid, 1, 20);
+            if (!clubact.ContainsKey(clubid))
+            {
+                clubact[clubid] = client.Clubs.GetLatestClubActivities(clubid, 1, 20);
+            }
+
+            return clubact[clubid];
         }
 
+        private Dictionary<string, List<ClubEvent>> clubevent = new Dictionary<string, List<ClubEvent>>();
         public List<ClubEvent> ClubEvents(string clubid)
         {
-            return client.Clubs.GetClubEvents(clubid);
+            if (!clubevent.ContainsKey(clubid))
+            {
+                clubevent[clubid] = client.Clubs.GetClubEvents(clubid);
+            }
+
+            return clubevent[clubid];
         }
 
         //public List<ClubEvent> ClubEventsByDateRange(string clubid, Tuple<DateTime,DateTime> daterange)

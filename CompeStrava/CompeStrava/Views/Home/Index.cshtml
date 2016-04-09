@@ -1,5 +1,7 @@
 ﻿@using Strava.Clubs;
-@model List<Club>
+@using Strava.Athletes;
+@using CompeStrava.ViewModel;
+@model HomeViewModel
 @{
     ViewBag.Title = "Home Page";
 }
@@ -38,6 +40,45 @@ else
 {*@
     <div class="col-lg-12">
         <div class="page-header">
+            <h1 id="tables">Kings of the hills</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Training sessions</h3>
+                    </div>
+                    <img src="@Model.indiv.Key.Profile">
+                    <div class="panel-body">
+                        @Model.indiv.Key.FirstName did @Model.indiv.Value individual workout !
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Suffer score</h3>
+                        </div>
+                        <img src="@Model.suffer.Key.Profile">
+                        <div class="panel-body">
+                            @Model.suffer.Key.FirstName did suffer a lot ! Average score @Model.suffer.Value
+                        </div>
+                    </div>
+                    <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+                </div>
+            <div class="col-lg-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Calories</h3>
+                    </div>
+                    <img src="@Model.cal.Key.Profile">
+                    <div class="panel-body">
+                        @Model.cal.Key.FirstName did burn @Model.cal.Value Kj
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-header">
             <h1 id="tables">Teams</h1>
         </div>
 
@@ -52,7 +93,7 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Club c in Model)
+                    @foreach (Club c in Model.clubs)
                     {
                         <tr onclick="location.href = '@(Url.Action("Index", "Team", new { teamid = c.Id }))'">
                             <td><img src="@c.Profile"></td>

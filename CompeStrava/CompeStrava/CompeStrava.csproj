@@ -177,6 +177,7 @@
     <Compile Include="Services\StravaService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Strava\StravaConnector.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LeaderBoardViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
